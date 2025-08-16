@@ -159,7 +159,7 @@ class MarkdownNotepad(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("自制Markdown记事本")
+        self.setWindowTitle("Markdown记事本")
         self.setGeometry(100, 100, 1200, 800)
         self.setStyleSheet("""
             QMainWindow {
@@ -702,8 +702,8 @@ class MarkdownNotepad(QMainWindow):
     def show_about(self):
         """显示关于对话框"""
         about_text = f"""
-        <h2>自制Markdown记事本</h2>
-        <p>版本 1.4</p>
+        <h2>Markdown记事本</h2>
+        <p>版本 1.0</p>
         <p>一款功能强大的Markdown笔记工具，支持实时预览和WebDAV备份。</p>
         <p>功能特点：</p>
         <ul>
@@ -719,7 +719,6 @@ class MarkdownNotepad(QMainWindow):
         </ul>
         <p>应用数据目录: {self.app_data_dir}</p>
         <p>缓存目录: {self.cache_dir}</p>
-        <p>© 2025 高级记事本工具 | 保留所有权利</p>
         """
         QMessageBox.about(self, "关于", about_text)
 
