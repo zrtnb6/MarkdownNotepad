@@ -44,7 +44,7 @@
     "url": "WebDAV服务器地址",
     "username": "用户名",
     "password": "密码",
-    "remote_dir": "目标目录"
+    "remote_dir": "目标目录(留空则代表默认上传到根目录)"
 }
 ```
 
