@@ -2,7 +2,11 @@
 
 一个功能强大的Markdown笔记工具，支持实时预览、多标签页编辑和WebDAV云备份。
 
-![应用截图]([screenshot.png](https://github.com/zrtnb6/MarkdownNotepad/blob/main/Screenshot/Screenshot.jpg)) *（实际应用截图）*
+## 界面示意图
+
+程序主界面如下所示：
+
+![程序主界面](Screenshot/Screenshot.jpg)
 
 ## 功能特点
 
