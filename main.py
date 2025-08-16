@@ -195,18 +195,9 @@ class MarkdownNotepad(QMainWindow):
         self.cache_dir = os.path.join(self.app_data_dir, "cache")
         os.makedirs(self.cache_dir, exist_ok=True)
         
-        # 设置主窗口图标
-        icon_path = os.path.join(self.base_path, "icons", "app_icon.png")
-        if os.path.exists(icon_path):
-            self.setWindowIcon(QIcon(icon_path))
-        else:
-            # 尝试在应用数据目录查找
-            cache_icon_path = os.path.join(self.app_data_dir, "app_icon.png")
-            if os.path.exists(cache_icon_path):
-                self.setWindowIcon(QIcon(cache_icon_path))
-            else:
-                print(f"图标文件未找到: {icon_path}")
-
+        # 设置主窗口图标 - 修复打包后图标不显示的问题
+        self.setup_icon()
+        
         # 初始化变量
         self.current_file = None
         self.webdav_config = self.load_config()
@@ -221,6 +212,61 @@ class MarkdownNotepad(QMainWindow):
         self.status_bar = QStatusBar()
         self.setStatusBar(self.status_bar)
         self.update_status("就绪 | 未保存的更改")
+
+    def setup_icon(self):
+        """设置应用图标，确保在打包后也能正常工作"""
+        # 可能的图标路径列表
+        icon_paths = [
+            # 1. 尝试从打包资源目录加载
+            os.path.join(getattr(sys, '_MEIPASS', ''), "icons", "app_icon.png"),
+            
+            # 2. 尝试从可执行文件所在目录加载
+            os.path.join(os.path.dirname(os.path.abspath(sys.argv[0])), "app_icon.png"),
+            
+            # 3. 尝试从应用数据目录加载
+            os.path.join(self.app_data_dir, "app_icon.png"),
+            
+            # 4. 尝试从源代码目录加载（开发环境）
+            os.path.join(os.path.dirname(os.path.abspath(__file__)), "icons", "app_icon.png")
+        ]
+        
+        # 尝试所有可能的路径
+        for icon_path in icon_paths:
+            if os.path.exists(icon_path):
+                self.setWindowIcon(QIcon(icon_path))
+                print(f"使用图标: {icon_path}")
+                return
+        
+        # 如果所有路径都失败，使用内置图标（作为base64字符串）
+        print("未找到图标文件，使用内置图标")
+        self.setWindowIcon(self.create_fallback_icon())
+    
+    def create_fallback_icon(self):
+        """创建内置图标作为后备"""
+        # 创建一个简单的图标作为后备
+        from PyQt5.QtGui import QPixmap, QPainter, QColor, QBrush
+        from PyQt5.QtCore import QSize
+        
+        # 创建一个简单的蓝色M图标
+        pixmap = QPixmap(64, 64)
+        pixmap.fill(Qt.transparent)
+        
+        painter = QPainter(pixmap)
+        painter.setRenderHint(QPainter.Antialiasing)
+        
+        # 绘制背景
+        painter.setBrush(QBrush(QColor(52, 152, 219)))
+        painter.setPen(Qt.NoPen)
+        painter.drawRoundedRect(0, 0, 64, 64, 15, 15)
+        
+        # 绘制M字母
+        painter.setPen(QColor(255, 255, 255))
+        painter.setFont(QFont("Arial", 24, QFont.Bold))
+        painter.drawText(pixmap.rect(), Qt.AlignCenter, "M")
+        
+        painter.end()
+        
+        return QIcon(pixmap)
 
     def init_ui(self):
         """初始化用户界面"""
@@ -429,13 +475,6 @@ class MarkdownNotepad(QMainWindow):
         current_widget = self.tab_widget.currentWidget()
         if current_widget:
             return current_widget.findChildren(QSplitter)[0]
-        return None
-
-    def get_current_editor(self):
-        """获取当前标签页的编辑器"""
-        splitter = self.get_current_tab_content()
-        if splitter and splitter.count() > 0:
-            return splitter.widget(0)
         return None
 
     def get_current_container(self):
