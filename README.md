@@ -24,9 +24,23 @@
 
 直接双击运行 `build.bat` 脚本即可自动安装所需依赖并自动打包，打包后的可执行文件位于 `/dist` 目录中
 
-### 依赖安装
+## 数据目录
 
-在运行前，请确保安装以下依赖：
+应用的所有配置和缓存文件存储在以下位置：
 
 ```bash
-pip install PyQt5 requests markdown
+<应用所在目录>/MarkdownNotepadData/
+├── webdav_config.json  # WebDAV配置
+└── cache/              # 缓存文件目录（WebDAV恢复的文件存储位置）
+
+## WebDAV配置
+
+配置文件位于 MarkdownNotepadData/webdav_config.json，格式如下：
+
+```bash
+{
+    "url": "WebDAV服务器地址",
+    "username": "用户名",
+    "password": "密码",
+    "remote_dir": "notes"
+}
