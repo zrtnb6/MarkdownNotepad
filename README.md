@@ -32,6 +32,7 @@
 <应用所在目录>/MarkdownNotepadData/
 ├── webdav_config.json  # WebDAV配置
 └── cache/              # 缓存文件目录（WebDAV恢复的文件存储位置）
+```
 
 ## WebDAV配置
 
