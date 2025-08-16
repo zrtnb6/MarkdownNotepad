@@ -6,7 +6,7 @@
 
 程序主界面如下所示：
 
-![程序主界面](Screenshot/Screenshot.jpg)
+![程序主界面](Screenshot/Screenshot.png)
 
 ## 功能特点
 
