@@ -19,6 +19,7 @@
 - ⏲️ 备份文件自动添加时间戳
 - 📁 配置和缓存存储在应用数据目录
 - 💾 从WebDAV恢复的文件自动保存到缓存目录
+- 🖼️ 支持自定义主题和样式
 
 ## 打包指南
 
@@ -45,3 +46,15 @@
     "password": "密码",
     "remote_dir": "notes"
 }
+```
+
+##主题定制
+您可以通过修改以下代码片段来自定义应用主题：
+```bash
+# 在 __main__ 部分修改调色板颜色
+palette = QPalette()
+palette.setColor(QPalette.Window, QColor(240, 240, 240))  # 背景色
+palette.setColor(QPalette.WindowText, Qt.black)           # 文字颜色
+palette.setColor(QPalette.Highlight, QColor(52, 152, 219)) # 高亮色
+# ... 其他颜色设置
+```
